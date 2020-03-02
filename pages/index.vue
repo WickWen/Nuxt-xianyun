@@ -6,7 +6,7 @@
         <div
           class="banner-image"
           :style="`
-                background:url(${item.url}) center center no-repeat;
+                background:url(${$axios.defaults.baseURL}${item.url}) center center no-repeat;
                 background-size:contain contain;
                 `"
         ></div>
@@ -19,17 +19,18 @@
 export default {
   data() {
     return {
-      banners: [
-        {
-          url:
-          "http://attach.bbs.miui.com/forum/201401/11/145825zn1sxa8anrg11gt1.jpg"
-        },
-        {
-          url:
-          "http://attach.bbs.miui.com/forum/201311/17/174124tp3sa6vvckc25oc8.jpg"
-        }
-      ]
+      banners: []
     };
+  },
+  mounted(){
+    this.getBanners();
+  },
+  methods:{
+    async getBanners(){
+      const res = await this.$axios({url:'/scenics/banners'})
+      const {data} = res.data
+      this.banners =data;
+    }
   }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    首页
+      酒店页面
   </div>
 </template>
 

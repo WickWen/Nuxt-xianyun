@@ -1,12 +1,22 @@
 <template>
   <div>
+    <Header></Header>
+    
     <nuxt />
     <!-- <nuxt/> 组件用于显示页面的主体内容 -->
+
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
+import Header from '@/components/Header.vue'
+import Footer from '@/components/Footer'
 export default {
+  components:{
+    Header,
+    Footer
+  }
 
 }
 </script>

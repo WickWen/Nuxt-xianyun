@@ -27,9 +27,13 @@ export default {
   },
   methods:{
     async getBanners(){
-      const res = await this.$axios({url:'/scenics/banners'})
-      const {data} = res.data
-      this.banners =data;
+      try {
+        const res = await this.$axios({url:'/scenics/banners'})
+        const {data} = res.data
+        this.banners =data;
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };

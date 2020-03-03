@@ -18,13 +18,20 @@
                     </span>
                 </el-row>
 
+                <!-- 登录功能组件 -->
+                <LoginForm v-if="currentTab == 0"/>
+
             </div>
         </el-row>
     </div>
 </template>
 
 <script>
+import LoginForm from '@/components/user/LoginForm'
 export default {
+    components:{
+        LoginForm
+    },
     data(){
         return {
             currentTab:0 

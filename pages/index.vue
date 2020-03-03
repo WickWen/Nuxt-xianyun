@@ -37,7 +37,7 @@
         <el-row type="flex" align="middle" class="search-input">
           <input
             :placeholder="options[currentOption].placeholder"
-            v-model="searchValue"  
+            v-model="searchValue"
             @keyup.enter="handleSearch"
           />
           <i class="el-icon-search" @click="handleSearch"></i>
@@ -70,8 +70,8 @@ export default {
           pageUrl: "/air"
         }
       ],
-      currentOption: 0 ,/* 1.当前激活选项 */
-      searchValue:''
+      currentOption: 0 /* 1.当前激活选项 */,
+      searchValue: ""
     };
   },
   mounted() {
@@ -90,10 +90,14 @@ export default {
     handleOption(index) {
       this.currentOption = index;
       // 点击获取到的 index 赋值到data
+      const item = this.options[index];
+      if (item.name === "机票") {
+        return this.$router.push(item.pageUrl);
+      }
     },
-    handleSearch(){
+    handleSearch() {
       const item = this.options[this.currentOption];
-      this.$router.push(item.pageUrl + this.searchValue)
+      this.$router.push(item.pageUrl + this.searchValue);
     }
   }
 };

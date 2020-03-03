@@ -36,9 +36,11 @@
         <!-- 输入框 -->
         <el-row type="flex" align="middle" class="search-input">
           <input
-
+            :placeholder="options[currentOption].placeholder"
+            v-model="searchValue"  
+            @keyup.enter="handleSearch"
           />
-          <i class="el-icon-search"></i>
+          <i class="el-icon-search" @click="handleSearch"></i>
         </el-row>
       </div>
     </div>
@@ -55,7 +57,7 @@ export default {
         {
           name: "攻略",
           placeholder: "搜索城市",
-          pageUrl: "/post?city="
+          pageUrl: "/travel?city="
         },
         {
           name: "酒店",
@@ -68,7 +70,8 @@ export default {
           pageUrl: "/air"
         }
       ],
-      currentOption: 0 /* 1.当前激活选项 */
+      currentOption: 0 ,/* 1.当前激活选项 */
+      searchValue:''
     };
   },
   mounted() {
@@ -87,6 +90,10 @@ export default {
     handleOption(index) {
       this.currentOption = index;
       // 点击获取到的 index 赋值到data
+    },
+    handleSearch(){
+      const item = this.options[this.currentOption];
+      this.$router.push(item.pageUrl + this.searchValue)
     }
   }
 };

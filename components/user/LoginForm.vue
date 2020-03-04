@@ -74,15 +74,23 @@ export default {
             //     }
             // });
 
-            // 2.promise 用法, 若不传入回调函数，则会返回一个 promise
-            this.$refs.form.validate().then(res=>{
-                if (res) {
-                    console.log(this.form)
-                }
-            }).catch(err=>{
-                console.log('校验失败');
-                console.log(err);
-            })
+            // 2.async await, try catch 
+            this.$refs.form.validate(async isValid => {
+                if (isValid) {
+                    try {
+                        const res = await this.$axios({
+                            url:'/accounts/login',
+                            method:'post',
+                            data:this.form
+                        });
+                        console.log(res.data); 
+
+                    } catch (error) {
+                        console.log(error);                       
+                    }
+                    
+                };
+            });
 
         }
     }

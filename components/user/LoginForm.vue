@@ -4,17 +4,20 @@
         ref="form"
         :rules="rules" 
         class="form">
+        <!-- :model  绑定数据模型  :rules 校验规则  prop需校验的字段名 -->
 
-        <el-form-item class="form-item">
+        <el-form-item class="form-item" prop='username'>
             <el-input 
-            placeholder="用户名/手机">
+            placeholder="用户名/手机"
+            v-model="form.username">
             </el-input>
         </el-form-item>
 
-        <el-form-item class="form-item">
+        <el-form-item class="form-item" prop='password'>
             <el-input 
             placeholder="密码" 
-            type="password">
+            type="password"
+            v-model="form.password">
             </el-input>
         </el-form-item>
 
@@ -37,9 +40,25 @@ export default {
     data(){
         return {
             // 表单数据
-            form: {},
+            form: {
+                username:'',
+                password:''
+            },
             // 表单规则
-            rules: {},
+            rules: {
+                username:[
+                    {required: true,
+                    message:'请输入正确的用户名/手机',
+                    trigger:'blur'}
+                    // required 是否必填输入框数据 如不设置，则会根据校验规则自动生成
+                    // trigger 触发方式  blur  使input失去焦点
+                ],
+                password:[
+                    {required: true,
+                    message:'请输入正确的密码',
+                    trigger:'blur'}
+                ]
+            },
         }
     },
     methods: {

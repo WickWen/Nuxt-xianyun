@@ -36,7 +36,9 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    { src: '@/plugins/localStorage', ssr: false }
+    // 设置服务端不能使用
   ],
 
   /*

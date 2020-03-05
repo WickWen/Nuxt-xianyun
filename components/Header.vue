@@ -21,14 +21,17 @@
             <el-row type="flex" align="middle">
 
                 <!-- 如果用户存在则展示用户信息，用户数据来自store -->
-                <el-dropdown v-if="false">
+                <el-dropdown v-if="$store.state.user.userInfo.token">
                     <el-row type="flex" align="middle" class="el-dropdown-link">
                         <nuxt-link to="#">
-                            <img src="http://157.122.54.189:9093/images/pic_sea.jpeg"/>
-                            用户名
+                            <img v-if="$store.state.user.userInfo.user.defaultAvatar" 
+                            :src="$axios.defaults.baseURL + $store.state.user.userInfo.user.defaultAvatar" >
+                            <img  v-else src="http://157.122.54.189:9093/images/pic_sea.jpeg"/>
+                            {{$store.state.user.userInfo.user.nickname}}
                         </nuxt-link>
                         <i class="el-icon-caret-bottom el-icon--right"></i>
                     </el-row>
+                 
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item>
                            <nuxt-link to="#">个人中心</nuxt-link>

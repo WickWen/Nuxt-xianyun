@@ -84,6 +84,9 @@ export default {
                             data:this.form
                         });
                         console.log(res.data); 
+                        if (res.data.token) {
+                            this.$store.commit('user/setUserInfo', res.data)
+                        }
 
                     } catch (error) {
                         console.log(error);                       

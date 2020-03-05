@@ -75,23 +75,18 @@ export default {
             // });
 
             // 2.async await, try catch 
-            this.$refs.form.validate(async isValid => {
+            this.$refs.form.validate( isValid => {
                 if (isValid) {
-                    try {
-                        const res = await this.$axios({
-                            url:'/accounts/login',
-                            method:'post',
-                            data:this.form
+                    this.$store.dispatch('user/login', this.form).then(res =>{
+                        this.$message({
+                            message:'登录成功,正在跳转',
+                            type:'success'
                         });
-                        console.log(res.data); 
-                        if (res.data.token) {
-                            this.$store.commit('user/setUserInfo', res.data)
-                        }
-
-                    } catch (error) {
-                        console.log(error);                       
-                    }
-                    
+                        // 跳转到首页
+                        setTimeout(() => {
+                            this.$router.replace('/')
+                        }, 1000);
+                    })                   
                 };
             });
 

@@ -8,10 +8,30 @@ export const state = () => ({
             user: {},
         }
     }
-  })
-//   state，驱动应用的数据源；
-  export const mutations = {
-      setUserInfo(state, data) {
-          state.userInfo = data
+})
+// state，驱动应用的数据源；
+export const mutations = {
+    setUserInfo(state, data) {
+        state.userInfo = data
     }
-  }
+}
+
+export const actions = {
+    async login({commit}, data) {
+        try {
+            const res = await this.$axios({
+                url: '/accounts/login',
+                method: 'post',
+                data
+            });
+            console.log(res.data);
+            if (res.data.token) {
+                commit('setUserInfo', res.data)
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+}

@@ -119,7 +119,36 @@ export default {
 
     // 注册
     handleRegSubmit() {
-      console.log(this.form);
+        // 扩展运算符, 剩余参数写法 ES6
+        const { checkPassword, ...props} = this.form;
+        this.$axios({
+            url:'/accounts/register',
+            method:'post',
+            data: props
+            // data:{
+            //     username:this.form.username,
+            //     nickname:this.form.nickname,
+            //     captcha:this.form.captcha,
+            //     password:this.form.password
+            // }
+        }).then(res =>{
+            console.log(res.data);  
+            if (res.data.token) {
+                this.$store.commit('user/setUserInfo',res.data)
+                
+                this.$message({
+                    message:'注册成功',
+                    type:'success'
+                });
+                
+                setTimeout(() => {
+                    this.$router.push('/')
+                }, 888);
+
+                
+            }       
+        })
+
     }
   }
 };

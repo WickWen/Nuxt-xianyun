@@ -78,14 +78,19 @@ export default {
             this.$refs.form.validate( isValid => {
                 if (isValid) {
                     this.$store.dispatch('user/login', this.form).then(res =>{
-                        this.$message({
-                            message:'登录成功,正在跳转',
-                            type:'success'
-                        });
-                        // 跳转到首页
-                        setTimeout(() => {
-                            this.$router.replace('/')
-                        }, 1000);
+                        console.log(res.data);
+
+                        if (res.data.token) {
+                            this.$message({
+                                message:'登录成功,正在跳转',
+                                type:'success'
+                            });
+                            // 跳转到首页
+                            setTimeout(() => {
+                                this.$router.replace('/')
+                            }, 1000);    
+                        }
+                        
                     })                   
                 };
             });

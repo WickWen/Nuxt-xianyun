@@ -41,6 +41,7 @@ export const actions = {
             console.log(res.data);
             if (res.data.token) {
                 commit('setUserInfo', res.data)
+                return res;
             }
 
         } catch (error) {

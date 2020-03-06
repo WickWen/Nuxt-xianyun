@@ -43,7 +43,7 @@ export default {
     }
     return {
       form: {
-        username: "",
+        username: "",  /* tel */
         nickname: "",
         password: "",
         captcha: "",
@@ -80,7 +80,42 @@ export default {
   },
   methods: {
     // 发送验证码
-    handleSendCaptcha() {},
+    handleSendCaptcha() {
+        if (!this.form.username) {
+            this.$message({
+                showClose: true,
+                message: '手机号码不能为空',
+                type: 'error'
+            });
+            return;
+        }
+
+        if(this.form.username.length !== 11){
+            this.$confirm('手机号码格式错误', '提示', {
+                confirmButtonText: '确定',
+                showCancelButton: false,
+                type: 'warning'
+            })
+            return;
+        }
+
+        this.$axios({
+            url:'/captchas',
+            method:'post',
+            data:{
+                tel:this.form.username
+            }
+        }).then(res => {
+            console.log(res.data);
+            if (res.data.code) {
+                this.$message({
+                  message: '获取验证码成功 : 000000',
+                  type: 'success'
+                });                
+                
+            }       
+        })
+    },
 
     // 注册
     handleRegSubmit() {

@@ -36,8 +36,8 @@
                         <el-dropdown-item>
                            <nuxt-link to="#">个人中心</nuxt-link>
                         </el-dropdown-item>
-                        <el-dropdown-item>
-                            <div @click="handleLogout">退出</div> 
+                        <el-dropdown-item @click.native="handleLogout">
+                            <div>退出</div> 
                         </el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
@@ -54,7 +54,10 @@
 export default {
     methods: {
         // 用户退出
-        handleLogout(){},
+        handleLogout(){
+            // 复用 setUserInfo方法 清空 vuex
+            this.$store.commit('user/setUserInfo',{});
+        },
     }
 }
 </script>

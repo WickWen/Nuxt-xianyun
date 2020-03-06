@@ -13,7 +13,21 @@ export const state = () => ({
 export const mutations = {
     setUserInfo(state, data) {
         state.userInfo = data
-    }
+    },
+
+    // clearUserInfo(state) {
+    //     // 清空 vuex
+    //     state.userInfo = {};
+
+    //     if (process.browser) {
+    //         console.log(process.browser);
+    //         // 当前运行的数据 如果是在浏览器 返回true , 在服务器 返回 false
+    //         localStorage.removeItem('store')
+    //         // localStorage保存的key 是 store value 是 user对象 保存了用户信息
+    //     }
+    // }
+
+
 }
 
 export const actions = {

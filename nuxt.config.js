@@ -37,8 +37,9 @@ export default {
   */
   plugins: [
     '@/plugins/element-ui',
-    { src: '@/plugins/localStorage', ssr: false }
+    { src: '@/plugins/localStorage', ssr: false },
     // 设置服务端不能使用
+    '@/plugins/axios.js'
   ],
 
   /*

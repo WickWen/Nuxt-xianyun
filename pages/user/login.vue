@@ -10,7 +10,7 @@
             <div class="form-wrapper">
                 <!-- 表单头部 tab -->
                 <el-row type="flex" justify="center" class="tabs">
-                    <span :class="{active: currentTab === index}"
+                    <span :class="{active: currentTab == index}"
                     v-for="(item,index) in ['登录','注册']" 
                     :key="index"
                     @click="handleChangeTab(index)">
@@ -39,12 +39,19 @@ export default {
     },
     data(){
         return {
-            currentTab:0 
+
         }
+    },
+    computed:{
+        currentTab() {
+            // 查询返回切换的index 0,1   如果没有 默认 给 0
+            return this.$route.query.current || 0;
+        }
+
     },
     methods:{
         handleChangeTab(index){
-            this.currentTab = index
+            this.$router.push('/user/login?current=' + index);
         }
     }
 }

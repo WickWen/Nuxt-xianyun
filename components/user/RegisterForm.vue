@@ -142,7 +142,7 @@ export default {
                 });
                 
                 setTimeout(() => {
-                    this.$router.push('/')
+                    this.$router.push('/user/login?current=0')
                 }, 888);
 
                 

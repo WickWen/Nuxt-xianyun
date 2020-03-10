@@ -17,9 +17,13 @@
                 class="el-autocomplete"
                 v-model="form.departCity"
                 @select="handleDepartSelect"
+                highlight-first-item ="true"
+                :trigger-on-focus="false"     
                 :fetch-suggestions="getCityList"
                 ></el-autocomplete>
             </el-form-item>
+            <!-- 优化 :自动高亮第一个选项
+                输入后再激活输入建议 -->
 
             <el-form-item label="到达城市">
                 <el-autocomplete
@@ -27,6 +31,8 @@
                 class="el-autocomplete"
                 v-model="form.destCity"
                 @select="handleDestSelect"
+                highlight-first-item ="true"
+                :trigger-on-focus="false"
                 :fetch-suggestions="getCityList"
                 ></el-autocomplete>
             </el-form-item>

@@ -55,6 +55,10 @@
                 </el-button>
             </el-form-item>
 
+            <div class="reverse">
+                <span @click="handleReverse">换</span>
+            </div>
+
         </el-form>  
       </div>
 </template>
@@ -133,6 +137,16 @@ export default {
         handleDate(dataSelected){
           console.log(dataSelected);
           this.form.departDate = moment(dataSelected).format("YYYY-MM-DD");
+        },
+        // 目标城市切换时触发
+        handleReverse(){
+          const { departCity, departCode, destCity, destCode} = this.form
+
+          this.form.departCity = destCity;
+          this.form.departCode = destCode;
+          this.form.destCity = departCity;
+          this.form.destCode = departCode;          
+
         }
 
 

@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
     data(){
         return {
@@ -139,6 +140,7 @@ export default {
         // 用户确认选定日期时触发
         handleDate(dataSelected){
           console.log(dataSelected);
+          this.form.departDate = moment(dataSelected).format("YYYY-MM-DD");
         }
 
 

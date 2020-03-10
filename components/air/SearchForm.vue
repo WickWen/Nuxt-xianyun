@@ -17,7 +17,7 @@
                 class="el-autocomplete"
                 v-model="form.departCity"
                 @select="handleDepartSelect"
-                highlight-first-item ="true"
+                :highlight-first-item ="true"
                 :trigger-on-focus="false"     
                 :fetch-suggestions="getCityList"
                 ></el-autocomplete>
@@ -31,7 +31,7 @@
                 class="el-autocomplete"
                 v-model="form.destCity"
                 @select="handleDestSelect"
-                highlight-first-item ="true"
+                :highlight-first-item ="true"
                 :trigger-on-focus="false"
                 :fetch-suggestions="getCityList"
                 ></el-autocomplete>
@@ -100,11 +100,20 @@ export default {
             }
           }).then(res=>{
             const {data} = res.data;
-            const cityList = data.map(city=>{
+            let cityList = data.map(city=>{
               return {
                 ...city,
                 value:city.name
               }
+            })
+            // 过滤掉没有 sort 数据的城市
+            cityList = cityList.filter(city=>{
+              // if (city.sort) {
+              //   return true
+              // } else {
+              //   return false
+              // }
+              return city.sort
             })
             showList(cityList)
           })

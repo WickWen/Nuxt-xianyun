@@ -17,7 +17,7 @@
                 class="el-autocomplete"
                 v-model="form.departCity"
                 @select="handleDepartSelect"
-                :fetch-suggestions="queryDepartSearch"
+                :fetch-suggestions="getCityList"
                 ></el-autocomplete>
             </el-form-item>
 
@@ -27,7 +27,7 @@
                 class="el-autocomplete"
                 v-model="form.destCity"
                 @select="handleDestSelect"
-                :fetch-suggestions="queryDestSearch"
+                :fetch-suggestions="getCityList"
                 ></el-autocomplete>
             </el-form-item>
 
@@ -81,8 +81,8 @@ export default {
         handleSubmit(){
           console.log(this.form);         
         },
-        // 激活即列出输入建议
-        queryDepartSearch(searchValue,showList){
+        // 封装获取建议列表
+        getCityList(searchValue,showList){
           if (!searchValue) {
             return;
           }
@@ -104,31 +104,7 @@ export default {
           })
 
         },
-        queryDestSearch(searchValue,showList){
-          if (!searchValue) {
-            return;
-          }
-          this.$axios({
-            url:'/airs/city',
-            method:'get',
-            params:{
-              name:searchValue
-            }
-          }).then(res=>{
-            console.log(res.data);
-            const {data} = res.data;
-            // data解构出来是城市对象 , 只需要拿到对象中 name属性显示城市名即可
-            // 使用map方法遍历出含有name属性的新数组
-            const cityList = data.map(city=>{
-              return {
-                ...city,   /* 展开运算符 city ES6 */
-                value:city.name   /* 修改组件要求数据格式 */
-              }
-            })
-            showList(cityList)
-          })
 
-        },
         // 出发城市 点击选中建议项时触发
         handleDepartSelect(item){
           console.log(item);

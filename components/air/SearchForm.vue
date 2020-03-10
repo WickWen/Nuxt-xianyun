@@ -32,11 +32,12 @@
             </el-form-item>
 
             <el-form-item label="出发时间">
-                <el-autocomplete
-                placeholder="请输入出发时间" 
+                <el-date-picker type="date" 
+                placeholder="请选择日期" 
                 style="width: 100%;"
+                @change="handleDate"
                 v-model="form.departDate">
-                </el-autocomplete>
+                </el-date-picker>
             </el-form-item>
                       
             <el-form-item label="">
@@ -134,6 +135,10 @@ export default {
         },
         handleDestSelect(item){
           this.form.destCode = item.sort
+        },
+        // 用户确认选定日期时触发
+        handleDate(dataSelected){
+          console.log(dataSelected);
         }
 
 

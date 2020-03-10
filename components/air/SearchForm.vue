@@ -85,6 +85,13 @@ export default {
     methods: {
         // 触发 Tab栏 切换
         handleSearchTab(item, index){
+          if (index === 1) {
+            this.$confirm('目前暂不支持往返,请使用单程选票！','提示',{
+              confirmButtonText:'确定',
+              showCancelButton: false,
+              type:'warning'
+            })            
+          }
             
         },
         // 提交表单触发

@@ -15,6 +15,8 @@
                 <el-autocomplete
                 placeholder="请搜索出发城市"
                 class="el-autocomplete"
+                v-model="form.departCity"
+                :fetch-suggestions="queryDepartSearch"
                 ></el-autocomplete>
             </el-form-item>
 
@@ -22,20 +24,28 @@
                 <el-autocomplete
                 placeholder="请搜索到达城市"
                 class="el-autocomplete"
+                v-model="form.destCity"
+                :fetch-suggestions="queryDestSearch"
                 ></el-autocomplete>
+            </el-form-item>
+
+            <el-form-item label="出发时间">
+                <el-autocomplete
+                placeholder="请输入出发时间" 
+                style="width: 100%;"
+                v-model="form.departDate">
+                </el-autocomplete>
             </el-form-item>
                       
             <el-form-item label="">
                 <el-button style="width:100%;" 
                 type="primary" 
-                icon="el-icon-search">
+                icon="el-icon-search"
+                @click="handleSubmit">
                     搜索
                 </el-button>
             </el-form-item>
 
-            <div class="reverse">
-                <span>换</span>
-            </div>
         </el-form>  
       </div>
 </template>
@@ -49,13 +59,71 @@ export default {
                 {icon: "iconfont iconshuangxiang", name: "往返"}
             ],
             currentTab: 0,
+            form:{
+              departCity:'',
+              destCity:'',
+              departDate:''
+            }
         }
     },
     methods: {
         // 触发 Tab栏 切换
         handleSearchTab(item, index){
             
-        }
+        },
+        // 提交表单触发
+        handleSubmit(){
+          console.log(this.form);         
+        },
+        // 激活即列出输入建议
+        queryDepartSearch(searchValue,showList){
+          if (!searchValue) {
+            return;
+          }
+          this.$axios({
+            url:'/airs/city',
+            method:'get',
+            params:{
+              name:searchValue
+            }
+          }).then(res=>{
+            const {data} = res.data;
+            const cityList = data.map(city=>{
+              return {
+                ...city,
+                value:city.name
+              }
+            })
+            showList(cityList)
+          })
+
+        },
+        queryDestSearch(searchValue,showList){
+          if (!searchValue) {
+            return;
+          }
+          this.$axios({
+            url:'/airs/city',
+            method:'get',
+            params:{
+              name:searchValue
+            }
+          }).then(res=>{
+            console.log(res.data);
+            const {data} = res.data;
+            // data解构出来是城市对象 , 只需要拿到对象中 name属性显示城市名即可
+            // 使用map方法遍历出含有name属性的新数组
+            const cityList = data.map(city=>{
+              return {
+                ...city,   /* 展开运算符 city ES6 */
+                value:city.name   /* 修改组件要求数据格式 */
+              }
+            })
+            showList(cityList)
+          })
+
+        },
+
 
     }
 

@@ -16,6 +16,7 @@
                 placeholder="请搜索出发城市"
                 class="el-autocomplete"
                 v-model="form.departCity"
+                @select="handleDepartSelect"
                 :fetch-suggestions="queryDepartSearch"
                 ></el-autocomplete>
             </el-form-item>
@@ -25,6 +26,7 @@
                 placeholder="请搜索到达城市"
                 class="el-autocomplete"
                 v-model="form.destCity"
+                @select="handleDestSelect"
                 :fetch-suggestions="queryDestSearch"
                 ></el-autocomplete>
             </el-form-item>
@@ -61,7 +63,9 @@ export default {
             currentTab: 0,
             form:{
               departCity:'',
+              departCode:'',
               destCity:'',
+              destCode:'',
               departDate:''
             }
         }
@@ -123,6 +127,14 @@ export default {
           })
 
         },
+        // 出发城市 点击选中建议项时触发
+        handleDepartSelect(item){
+          console.log(item);
+          this.form.departCode = item.sort
+        },
+        handleDestSelect(item){
+          this.form.destCode = item.sort
+        }
 
 
     }

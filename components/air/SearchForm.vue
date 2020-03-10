@@ -103,7 +103,8 @@ export default {
             let cityList = data.map(city=>{
               return {
                 ...city,
-                value:city.name
+                // value:city.name.replace('市','')
+                value: city.name.replace(/市$/,'')
               }
             })
             // 过滤掉没有 sort 数据的城市

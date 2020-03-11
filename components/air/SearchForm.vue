@@ -115,7 +115,13 @@ export default {
           // 带参跳转
           this.$router.push({
             path:'/air/flights',
-            query: this.form
+            query: {
+              departCity: this.form.departCity.replace(/市$/,''),
+              departCode: this.form.departCode,
+              destCity: this.form.destCity.replace(/市$/,''),
+              destCode: this.form.destCode,
+              departDate: this.form.departDate,
+            }
             // query 表示参数在url后面进行传递，参数直接拼在url地址栏的后面，用？分割一下，多个参数用&分割
             // query 传参时 参数出现在url的路径上面， 刷新页面时query里面的数据不变
           })       

@@ -96,7 +96,14 @@ export default {
         },
         // 提交表单触发
         handleSubmit(){
-          console.log(this.form);         
+          console.log(this.form);  
+          // 带参跳转
+          this.$router.push({
+            path:'/air/flights',
+            query: this.form
+            // query 表示参数在url后面进行传递，参数直接拼在url地址栏的后面，用？分割一下，多个参数用&分割
+            // query 传参时 参数出现在url的路径上面， 刷新页面时query里面的数据不变
+          })       
         },
         // 封装获取建议列表
         getCityList(searchValue,showList){

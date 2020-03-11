@@ -19,7 +19,7 @@
                 @select="handleDepartSelect"
                 :highlight-first-item ="true"
                 :trigger-on-focus="false"     
-                :fetch-suggestions="getCityList"
+                :fetch-suggestions="handleDepartSearch"
                 ></el-autocomplete>
             </el-form-item>
             <!-- 优化 :自动高亮第一个选项
@@ -33,7 +33,7 @@
                 @select="handleDestSelect"
                 :highlight-first-item ="true"
                 :trigger-on-focus="false"
-                :fetch-suggestions="getCityList"
+                :fetch-suggestions="handleDestSearch"
                 ></el-autocomplete>
             </el-form-item>
 
@@ -105,12 +105,25 @@ export default {
             // query 传参时 参数出现在url的路径上面， 刷新页面时query里面的数据不变
           })       
         },
+
+        handleDepartSearch(searchValue,showList){
+          // 调用封装的获取建议数据方法
+          this.getCityList(searchValue).then(cityList=>{
+            showList(cityList)
+          })
+        },
+        handleDestSearch(searchValue,showList){
+          this.getCityList(searchValue).then(cityList=>{
+            showList(cityList)
+          })
+        },
+
         // 封装获取建议列表
-        getCityList(searchValue,showList){
+        getCityList(searchValue){
           if (!searchValue) {
             return;
           }
-          this.$axios({
+          return this.$axios({
             url:'/airs/city',
             method:'get',
             params:{
@@ -134,7 +147,7 @@ export default {
               // }
               return city.sort
             })
-            showList(cityList)
+            return cityList
           })
 
         },

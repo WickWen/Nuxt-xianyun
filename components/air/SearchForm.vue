@@ -109,11 +109,25 @@ export default {
         handleDepartSearch(searchValue,showList){
           // 调用封装的获取建议数据方法
           this.getCityList(searchValue).then(cityList=>{
-            showList(cityList)
+            if (cityList.length>0) {
+            // 用户没有选择,则默认设定第一选项
+            this.form.departCode = cityList[0].sort
+            showList(cityList)              
+            }else {
+            // 如果没有获取到任何匹配,显示不支持
+              const suggestion = [
+                {
+                  value:'搜索不到该城市名'
+                }
+              ]
+              showList(suggestion)
+            }
+
           })
         },
         handleDestSearch(searchValue,showList){
           this.getCityList(searchValue).then(cityList=>{
+            this.form.destCode = cityList[0].sort
             showList(cityList)
           })
         },

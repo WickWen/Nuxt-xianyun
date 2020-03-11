@@ -95,7 +95,22 @@ export default {
             
         },
         // 提交表单触发
-        handleSubmit(){
+        async handleSubmit(){
+          // 防御性编程 发送前校验 Code
+          if (!this.form.departCode) {
+            let cityList = await this.getCityList(this.form.departCity);
+            if (cityList.length>0) {
+              this.form.departCode = cityList[0].sort
+            }     
+          }
+
+          if (!this.form.destCode) {
+            let cityList = await this.getCityList(this.form.destCity);
+            if (cityList.length>0) {
+              this.form.destCode = cityList[0].sort
+            }     
+          }
+
           console.log(this.form);  
           // 带参跳转
           this.$router.push({

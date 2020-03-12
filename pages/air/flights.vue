@@ -17,7 +17,11 @@
                 
                 <!-- 航班信息 -->
                 <div>
-                    <FlightsItem></FlightsItem>
+                    <FlightsItem
+                      v-for="(item, index) of datalist"
+                      :key="index"
+                      :flights="item"
+                    ></FlightsItem>
                 </div>
             </div>
 
@@ -34,6 +38,12 @@
 import FlightsHeader from '@/components/air/FlightsHeader'
 import FlightsItem from '@/components/air/FlightsItem'
 export default {
+  data() {
+    return {
+      flightsData:{},  //航班总数据
+      datalist:[]    // 机票列表数据
+    }
+  },
   components:{
     FlightsHeader,
     FlightsItem
@@ -51,6 +61,8 @@ export default {
         params: this.$route.query
       }).then(res => {
         console.log(res.data);
+        this.flightsData = res.data
+        this.datalist = this.flightsData.flights
       });
 
     }

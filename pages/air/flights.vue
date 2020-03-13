@@ -50,10 +50,10 @@ export default {
   },
 
   mounted() {
-    this.getFlightsList();
+    this.getFlightsData();
   },
   methods: {
-    getFlightsList() {
+    getFlightsData() {
       // 能够获取到 url 上面带过来的参数
       console.log(this.$route.query);
       this.$axios({

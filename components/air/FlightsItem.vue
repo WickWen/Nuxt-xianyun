@@ -1,7 +1,7 @@
 <template>
   <div class="flight-item">
-        <div>
-            <!-- 显示的机票信息 -->
+          <!-- 显示的机票信息 -->
+        <div @click="isShowRecommend = !isShowRecommend" >
             <el-row type="flex" align="middle" class="flight-info">
                 <el-col :span="6">
                     <span>{{flights.airline_name}} </span> {{flights.flight_no}}
@@ -27,8 +27,10 @@
             </el-row>
         </div>
 
-            <!-- 隐藏的座位信息列表 -->
-        <div class="flight-recommend">
+    <!-- Ele collapse 展开折叠效果 -->
+    <el-collapse-transition>
+          <!-- 隐藏的座位信息列表 -->
+        <div class="flight-recommend" v-if="isShowRecommend">
             <el-row type="flex"  justify="space-between" align="middle">
                 <el-col :span="4">低价推荐</el-col>
                 <el-col :span="20">
@@ -58,11 +60,18 @@
                 </el-col>
             </el-row>
         </div>
-    </div>
+    </el-collapse-transition>
+
+  </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            isShowRecommend: false
+        }
+    },
     props:['flights'],
     computed: {
         duration(){

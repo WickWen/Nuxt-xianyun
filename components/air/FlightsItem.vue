@@ -9,14 +9,14 @@
                 <el-col :span="12">
                     <el-row type="flex" justify="space-between" class="flight-info-center">
                         <el-col :span="8" class="flight-airport">
-                            <strong>{{flights.arr_time}}</strong>
+                            <strong>{{flights.dep_time}}</strong>
                             <span>{{flights.org_airport_name}}</span>
                         </el-col>
                         <el-col :span="8" class="flight-time">
-                            <span>2时20分</span>
+                            <span>{{duration}}</span>
                         </el-col>
                         <el-col :span="8" class="flight-airport">
-                            <strong>{{flights.dep_time}}</strong>
+                            <strong>{{flights.arr_time}}</strong>
                             <span>{{flights.dst_airport_name}}</span>
                         </el-col>
                     </el-row>
@@ -63,7 +63,25 @@
 
 <script>
 export default {
-    props:['flights']
+    props:['flights'],
+    computed: {
+        duration(){
+            const dep = this.flights.dep_time.split(':');
+            const arr = this.flights.arr_time.split(':');
+            // 时间转化为分钟
+            const depVal = dep[0] * 60 + +dep[1];
+            const arrVal = arr[0] * 60 + +arr[1];
+
+            let dis = arrVal - depVal;
+
+            if (dis<0) {
+                dis = (arrVal+24*60) - depVal
+                // 如果跨过凌晨时间段，需要加24小时
+            }
+            // 向下取整     
+            return Math.floor(dis/60) + '小时' + dis % 60 + '分钟';
+        }
+    },
 }
 </script>
 

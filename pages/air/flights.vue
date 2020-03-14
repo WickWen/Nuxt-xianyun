@@ -23,8 +23,12 @@
                       :flights="item"
                     ></FlightsItem>
 
+                    <div class="tip" v-if="flightsData.flights && flightsData.flights.length == 0">
+                      暂无航班数据
+                    </div>
+
                     <el-pagination
-                      v-if="flightsData.flights" 
+                      v-if="flightsData.flights && flightsData.flights.length > 0" 
                       @current-change="handleCurrentChange"
                       @size-change="handleSizeChange"
                       background
@@ -54,11 +58,26 @@ export default {
   data() {
     return {
       flightsData:{},  //航班总数据
-      datalist:[],    // 机票列表数据
+      // datalist:[],    机票列表数据
       pageIndex: 1,
       pageSize: 10
     }
   },
+  computed:{
+    datalist(){
+      // 不需要再调用函数,因为计算属性会监听数据变化自动 重新计算
+      const start = (this.pageIndex - 1) * this.pageSize;
+      const end = start + this.pageSize;
+
+      if (this.flightsData.flights) {
+        return this.flightsData.flights.slice(start,end)        
+      } else {
+        return [];
+        // 预防异步数据没有获取完毕
+      }
+    }
+  },
+
   components:{
     FlightsHeader,
     FlightsItem
@@ -68,21 +87,13 @@ export default {
     this.getFlightsData();
   },
   methods: {
-    loadList() {
-      const start = (this.pageIndex - 1) * this.pageSize;
-      const end = start + this.pageSize;
-      this.datalist = this.flightsData.flights.slice(start, end)
-
-    },
     // 切换页数时触发
     handleCurrentChange(current){
       this.pageIndex = current;
-      this.loadList();
     },
     // 切换页数时触发
     handleSizeChange(size){
       this.pageSize = size;
-      this.loadList();
     },
 
     getFlightsData() {
@@ -94,9 +105,6 @@ export default {
       }).then(res => {
         console.log(res.data);
         this.flightsData = res.data
-        // this.datalist = this.flightsData.flights
-        // 现在不能引入全部数据,显示切割好的数据
-        this.loadList();
       });
 
     }

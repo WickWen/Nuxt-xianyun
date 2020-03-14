@@ -22,6 +22,12 @@
                       :key="index"
                       :flights="item"
                     ></FlightsItem>
+
+                    <el-pagination
+                      background
+                      layout="prev, pager, next"
+                      :total="500">
+                    </el-pagination>
                 </div>
             </div>
 
@@ -41,7 +47,9 @@ export default {
   data() {
     return {
       flightsData:{},  //航班总数据
-      datalist:[]    // 机票列表数据
+      datalist:[],    // 机票列表数据
+      pageIndex: 1,
+      pageSize: 10
     }
   },
   components:{
@@ -53,6 +61,13 @@ export default {
     this.getFlightsData();
   },
   methods: {
+    loadList() {
+      const start = (this.pageIndex - 1) * this.pageSize;
+      const end = start + this.pageSize;
+      this.datalist = this.flightsData.flights.slice(start, end)
+
+    },
+
     getFlightsData() {
       // 能够获取到 url 上面带过来的参数
       console.log(this.$route.query);
@@ -62,7 +77,9 @@ export default {
       }).then(res => {
         console.log(res.data);
         this.flightsData = res.data
-        this.datalist = this.flightsData.flights
+        // this.datalist = this.flightsData.flights
+        // 现在不能引入全部数据,显示切割好的数据
+        this.loadList();
       });
 
     }

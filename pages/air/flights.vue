@@ -24,10 +24,17 @@
                     ></FlightsItem>
 
                     <el-pagination
+                      v-if="flightsData.flights" 
+                      @current-change="handleCurrentChange"
+                      @size-change="handleSizeChange"
                       background
-                      layout="prev, pager, next"
-                      :total="500">
+                      layout="total, sizes, prev, pager, next, jumper"
+                      :page-sizes="[5, 10, 20, 30]"
+                      :page-size="pageSize"
+                      :total="flightsData.flights.length">
                     </el-pagination>
+                    <!-- 因为异步获取，可能导致已进入页面加载不出flightData.flights，加入v-if解决 -->
+                    
                 </div>
             </div>
 
@@ -66,6 +73,16 @@ export default {
       const end = start + this.pageSize;
       this.datalist = this.flightsData.flights.slice(start, end)
 
+    },
+    // 切换页数时触发
+    handleCurrentChange(current){
+      this.pageIndex = current;
+      this.loadList();
+    },
+    // 切换页数时触发
+    handleSizeChange(size){
+      this.pageSize = size;
+      this.loadList();
     },
 
     getFlightsData() {

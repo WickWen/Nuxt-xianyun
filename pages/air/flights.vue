@@ -8,7 +8,7 @@
                 <div>
                     <FlightsFilters 
                     v-if="flightsData.options" 
-                    :flightsData='flightsData'
+                    :flightsData='cacheData'
                     @setFlightsList='setFlightsList'
                     ></FlightsFilters>
                 </div>
@@ -62,6 +62,7 @@ import FlightsFilters from '@/components/air/FlightsFilters'
 export default {
   data() {
     return {
+      cacheData:{},     //缓存数据
       flightsData:{},  //航班总数据
       // datalist:[],    机票列表数据
       pageIndex: 1,
@@ -111,6 +112,10 @@ export default {
       }).then(res => {
         console.log(res.data);
         this.flightsData = res.data
+        // 深拷贝一个缓存数据
+        this.cacheData = {
+          ...this.flightsData
+        }
       });
 
     },

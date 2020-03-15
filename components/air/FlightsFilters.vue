@@ -58,7 +58,8 @@
                        type="primary" 
                        round 
                        plain 
-                       size="mini" 
+                       size="mini"
+                       @click="handleFiltersCancel" 
                        >
                 撤销
     		</el-button>
@@ -145,6 +146,14 @@ export default {
                 return flight.plane_size == this.airSize
             })
             return newFlightsList
+        },
+        // 清除筛选
+        handleFiltersCancel(){
+            this.airport = "";
+            this.flightTimes = "";
+            this.company = "";
+            this.airSize = "";
+            this.coactFliters();
         }
 
     }

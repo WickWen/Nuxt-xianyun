@@ -6,7 +6,7 @@
             <div class="flights-content">
                 <!-- 过滤条件 -->
                 <div>
-                    过滤条件
+                    <FlightsFilters></FlightsFilters>
                 </div>
                 
                 <!-- 航班头部布局 -->
@@ -54,6 +54,7 @@
 <script>
 import FlightsHeader from '@/components/air/FlightsHeader'
 import FlightsItem from '@/components/air/FlightsItem'
+import FlightsFilters from '@/components/air/FlightsFilters'
 export default {
   data() {
     return {
@@ -80,7 +81,8 @@ export default {
 
   components:{
     FlightsHeader,
-    FlightsItem
+    FlightsItem,
+    FlightsFilters
   },
 
   mounted() {

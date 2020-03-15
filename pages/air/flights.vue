@@ -119,7 +119,7 @@ export default {
       });
 
     },
-    // 4.父组件监听渲染过滤好的数据
+    // 5.父组件监听渲染过滤好的数据
     setFlightsList(newFlightsList){
       this.flightsData.flights = newFlightsList;
     }

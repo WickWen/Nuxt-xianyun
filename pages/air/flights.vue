@@ -6,7 +6,11 @@
             <div class="flights-content">
                 <!-- 过滤条件 -->
                 <div>
-                    <FlightsFilters v-if="flightsData.options" :flightsData='flightsData'></FlightsFilters>
+                    <FlightsFilters 
+                    v-if="flightsData.options" 
+                    :flightsData='flightsData'
+                    @setFlightsList='setFlightsList'
+                    ></FlightsFilters>
                 </div>
                 
                 <!-- 航班头部布局 -->
@@ -109,6 +113,10 @@ export default {
         this.flightsData = res.data
       });
 
+    },
+    // 4.父组件监听渲染过滤好的数据
+    setFlightsList(newFlightsList){
+      this.flightsData.flights = newFlightsList;
     }
   }
 };

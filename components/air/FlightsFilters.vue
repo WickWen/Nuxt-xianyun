@@ -69,6 +69,7 @@
 <script>
 export default {
     props:[
+        // 1.航班列表总数据
         'flightsData'
     ],
     data(){
@@ -86,6 +87,17 @@ export default {
     },
     methods: {
         handleCompany(){
+            // 2.使用数组 filter 方法过滤选项数据
+            const newFlightsList = this.flightsData.flights.filter(flight=>{
+                // if (flights.airline_name == this.company) {
+                //     return true   
+                // }else{
+                //     return false
+                // }
+                return flight.airline_name == this.company
+            })
+            // 3.子组件将过滤后的数据传递回父组件
+            this.$emit('setFlightsList',newFlightsList)
 
         }
 
@@ -110,3 +122,4 @@ export default {
         margin-top:10px;
     }
 </style>
+

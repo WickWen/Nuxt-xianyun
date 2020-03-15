@@ -8,7 +8,7 @@
                 {{flightsData.info.departDate}}
             </el-col>
             <el-col :span="4">
-                <el-select size="mini" v-model="airport" placeholder="起飞机场">
+                <el-select size="mini" v-model="airport" placeholder="起飞机场" @change="handleAirport">
                     <el-option
                     v-for="(item, index) of flightsData.options.airport"
                     :key="index"
@@ -18,7 +18,7 @@
                 </el-select>
             </el-col>
             <el-col :span="4">
-                <el-select size="mini" v-model="flightTimes"  placeholder="起飞时间">
+                <el-select size="mini" v-model="flightTimes"  placeholder="起飞时间" @change="handleFlightTimes">
                     <el-option
                     v-for="(item, index) of flightsData.options.flightTimes"
                     :key="index"
@@ -42,7 +42,7 @@
                 </el-select>
             </el-col>
             <el-col :span="4">
-                <el-select size="mini" v-model="airSize" placeholder="机型">
+                <el-select size="mini" v-model="airSize" placeholder="机型" @change="handleAirSize">
                     <el-option
                     v-for="(item ,index) of sizeOptions"
                     :key="index"
@@ -86,6 +86,7 @@ export default {
         }
     },
     methods: {
+        // 航空公司
         handleCompany(){
             // 2.使用数组 filter 方法过滤选项数据
             const newFlightsList = this.flightsData.flights.filter(flight=>{
@@ -99,6 +100,31 @@ export default {
             // 3.子组件将过滤后的数据传递回父组件
             this.$emit('setFlightsList',newFlightsList)
 
+        },
+        // 出发机场
+        handleAirport(){
+            const newFlightsList = this.flightsData.flights.filter(flight=>{
+                return flight.org_airport_name == this.airport
+            })
+            this.$emit('setFlightsList',newFlightsList)
+        },
+        // 起飞时间
+        handleFlightTimes(){
+            const [from, to] = this.flightTimes.split(',')
+            // 结构出from == 6,to == 12
+            const newFlightsList = this.flightsData.flights.filter(flight=>{
+                const start =flight.dep_time.split(':')[0]
+                return start >= from && start < to;
+            })
+            this.$emit('setFlightsList',newFlightsList)
+
+        },
+        // 机型
+        handleAirSize(){
+            const newFlightsList = this.flightsData.flights.filter(flight=>{
+                return flight.plane_size == this.airSize
+            })
+            this.$emit('setFlightsList',newFlightsList)
         }
 
     }

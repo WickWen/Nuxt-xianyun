@@ -1,11 +1,12 @@
 export const state = () => ({
     list: [
-        {
-            departCity:'',
-            departCode:'',
-            destCity:'',
-            destCode:'',
-            departDate:''
-        }
+        
     ]
-})
+});
+
+export const mutations = {
+    addHistory(state,data) {
+        state.list.push(data)
+    }
+
+}

@@ -51,7 +51,8 @@
                         <el-col :span="3" class="choose-button">
                             <el-button 
                             type="danger" 
-                            size="mini">
+                            size="mini"
+                            @click="handleOrderPage(item)">
                             选定
                             </el-button>
                             <p>剩余：{{item.discount}}</p>
@@ -73,6 +74,17 @@ export default {
         }
     },
     props:['flights'],
+    methods: {
+        handleOrderPage(item){
+            this.$router.push({
+                path:'/air/order',
+                query:{
+                    id:this.flights.id,
+                    seat_xid:item.seat_xid
+                }
+            })
+        }
+    },
     computed: {
         duration(){
             const dep = this.flights.dep_time.split(':');

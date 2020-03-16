@@ -134,8 +134,9 @@ export default {
             const [from, to] = this.flightTimes.split(',')
             // 结构出from == 6,to == 12
             const newFlightsList = list.filter(flight=>{
-                const start =flight.dep_time.split(':')[0]
+                const start = +flight.dep_time.split(':')[0]
                 return start >= from && start < to;
+                // return Number(start) >= Number(from) && Number(start) < to;
             })
             return newFlightsList
 

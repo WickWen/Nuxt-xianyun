@@ -95,6 +95,12 @@ export default {
   mounted() {
     this.getFlightsData();
   },
+  // 监听路由变化,重新获取数据
+  watch: {
+    $route(){
+      this.getFlightsData();
+    }
+  },
   methods: {
     // 切换页数时触发
     handleCurrentChange(current){

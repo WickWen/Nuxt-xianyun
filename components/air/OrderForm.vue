@@ -3,10 +3,10 @@
         <div class="air-column">
             <h2>乘机人</h2>
             <el-form class="member-info">
-                <div class="member-info-item" >
+                <div class="member-info-item" v-for="(user, index) of users" :key="index">
 
                     <el-form-item label="乘机人类型">
-                        <el-input placeholder="姓名" class="input-with-select">
+                        <el-input placeholder="姓名" class="input-with-select" v-model="user.name">
                             <el-select 
                             slot="prepend" 
                             value="1" 
@@ -18,7 +18,7 @@
 
                     <el-form-item label="证件类型">
                         <el-input 
-                        placeholder="证件号码"  class="input-with-select">
+                        placeholder="证件号码"  class="input-with-select" v-model="user.id">
                             <el-select 
                             slot="prepend" 
                             value="1"           
@@ -28,11 +28,11 @@
                         </el-input>
                     </el-form-item>
 
-                    <span class="delete-user">-</span>
+                    <span class="delete-user" @click="handleDeleteUser(index)">-</span>
                 </div>
             </el-form>
 
-            <el-button class="add-member" type='primary'>添加乘机人</el-button>
+            <el-button class="add-member" type='primary' @click="handleAddUsers">添加乘机人</el-button>
         </div>
 
         <div class="air-column">
@@ -75,7 +75,30 @@
 
 <script>
 export default {
+    data() {
+        return {
+            users:[
+                // 每个item遍历出一个user对象
+                {
+                    name:'',
+                    id:''
+                }
+            ]
+        }
+    },
     methods: {
+        // 添加乘机人
+        handleAddUsers(){
+            this.users.push({
+                    name:'',
+                    id:''
+                })
+        },
+        // 移除乘机人
+        handleDeleteUser(index){
+            this.users.splice(index, 1);  //第一个参数是删除用户对象在数组的下标,第二个参数是删除数组中的长度(个数)
+        }
+
 
     }
 }
@@ -117,6 +140,7 @@ export default {
         &:first-child{
             .delete-user{
                 display: none;
+                // 设定第一个乘机人不显示 - 号
             }
         }
     }

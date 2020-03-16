@@ -49,7 +49,7 @@
             <!-- 侧边栏 -->
             <div class="aside">
                 <!-- 侧边栏组件 -->
-                侧边栏
+                <FlightsAside></FlightsAside>
             </div>
         </el-row>
     </section>
@@ -59,6 +59,7 @@
 import FlightsHeader from '@/components/air/FlightsHeader'
 import FlightsItem from '@/components/air/FlightsItem'
 import FlightsFilters from '@/components/air/FlightsFilters'
+import FlightsAside from '@/components/air/FlightsAside'
 export default {
   data() {
     return {
@@ -87,7 +88,8 @@ export default {
   components:{
     FlightsHeader,
     FlightsItem,
-    FlightsFilters
+    FlightsFilters,
+    FlightsAside
   },
 
   mounted() {

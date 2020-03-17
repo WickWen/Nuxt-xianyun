@@ -6,7 +6,7 @@
                 <div class="member-info-item" v-for="(user, index) of users" :key="index">
 
                     <el-form-item label="乘机人类型">
-                        <el-input placeholder="姓名" class="input-with-select" v-model="user.name">
+                        <el-input placeholder="姓名" class="input-with-select" v-model="user.username">
                             <el-select 
                             slot="prepend" 
                             value="1" 
@@ -57,11 +57,11 @@
             <div class="contact">
                 <el-form label-width="60px">
                     <el-form-item label="姓名">
-                        <el-input></el-input>
+                        <el-input v-model="contactName"></el-input>
                     </el-form-item>
 
                     <el-form-item label="手机">
-                        <el-input placeholder="请输入内容" v-model="cellphone">
+                        <el-input placeholder="请输入内容" v-model="contactPhone">
                             <template slot="append">
                             <el-button @click="handleSendCaptcha">发送验证码</el-button>
                             </template>
@@ -69,7 +69,7 @@
                     </el-form-item>
 
                     <el-form-item label="验证码">
-                        <el-input></el-input>
+                        <el-input v-model="captcha"></el-input>
                     </el-form-item>
                 </el-form>   
                 <el-button type="warning" class="submit" @click="handleSubmit">提交订单</el-button>
@@ -86,21 +86,22 @@ export default {
             users:[
                 // 每个item遍历出一个user对象
                 {
-                    name:'',
+                    username:'',
                     id:''
                 }
             ],
-            insurances:[
+            insurances:[],
+            contactPhone:'',
+            contactName:'',
+            captcha:''
 
-            ],
-            cellphone:''
         }
     },
     methods: {
         // 添加乘机人
         handleAddUsers(){
             this.users.push({
-                    name:'',
+                    username:'',
                     id:''
                 })
         },
@@ -110,7 +111,7 @@ export default {
         },
         // 发送手机验证码
         handleSendCaptcha(){
-            if (!this.cellphone) {
+            if (!this.contactPhone) {
                 this.$message.error('请输入正确的手机号码');
                 return            
             }
@@ -118,7 +119,7 @@ export default {
                 url:'captchas',
                 method:'post',
                 data:{
-                    tel:this.cellphone
+                    tel:this.contactPhone
                 }
             }).then(res=>{
                 console.log(res.data);
@@ -133,7 +134,35 @@ export default {
         },
         // 提交订单
         handleSubmit(){
-            console.log(this.insurances);         
+            const data ={
+                users:this.users,
+                insurances:this.insurances,
+                contactName:this.contactName,
+                contactPhone:this.contactPhone,
+                invoice:false,
+                seat_xid:this.$route.query.seat_xid,
+                air:this.$route.query.id,
+                captcha:this.captcha               
+            }
+            console.log(data);
+
+            this.$message({
+                message: "正在生成订单！请稍等",
+                type: "success"
+            })
+
+            this.$axios({
+                url:'/airorders',
+                method:'post',
+                data,
+                headers:{
+                    Authorization:'Bearer ' + this.$store.state.user.userInfo.token
+                    // 无论何时用户想要访问受保护的路由或者资源的时候，浏览器都应该带上JWT，通常放在Authorization header中，用Bearer
+                }
+            }).then(res=>{
+                console.log(res.data);
+                
+            })    
         }
 
 

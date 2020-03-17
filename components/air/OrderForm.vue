@@ -38,12 +38,17 @@
         <div class="air-column">
             <h2>保险</h2>
             <div>
-                <div class="insurance-item">
+                <el-checkbox-group v-model="insurances">
+                <div class="insurance-item" 
+                v-for="(item, index) of infoData.insurances" 
+                :key="index">
                     <el-checkbox 
-                    label="航空意外险：￥30/份×1  最高赔付260万" 
+                    :label="item.id" 
                     border>
+                        {{`${item.type}: ￥${item.price}/份x1 最高赔付${item.compensation}元`}}
                     </el-checkbox> 
                 </div>
+                </el-checkbox-group>
             </div>
         </div>
 
@@ -67,7 +72,7 @@
                         <el-input></el-input>
                     </el-form-item>
                 </el-form>   
-                <el-button type="warning" class="submit">提交订单</el-button>
+                <el-button type="warning" class="submit" @click="handleSubmit">提交订单</el-button>
             </div>
         </div>
     </div>
@@ -75,6 +80,7 @@
 
 <script>
 export default {
+    props:['infoData'],
     data() {
         return {
             users:[
@@ -83,6 +89,9 @@ export default {
                     name:'',
                     id:''
                 }
+            ],
+            insurances:[
+
             ]
         }
     },
@@ -97,6 +106,10 @@ export default {
         // 移除乘机人
         handleDeleteUser(index){
             this.users.splice(index, 1);  //第一个参数是删除用户对象在数组的下标,第二个参数是删除数组中的长度(个数)
+        },
+        // 提交订单
+        handleSubmit(){
+            console.log(this.insurances);         
         }
 
 

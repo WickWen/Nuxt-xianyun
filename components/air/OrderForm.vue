@@ -61,9 +61,9 @@
                     </el-form-item>
 
                     <el-form-item label="手机">
-                        <el-input placeholder="请输入内容">
+                        <el-input placeholder="请输入内容" v-model="cellphone">
                             <template slot="append">
-                            <el-button>发送验证码</el-button>
+                            <el-button @click="handleSendCaptcha">发送验证码</el-button>
                             </template>
                         </el-input>
                     </el-form-item>
@@ -92,7 +92,8 @@ export default {
             ],
             insurances:[
 
-            ]
+            ],
+            cellphone:''
         }
     },
     methods: {
@@ -106,6 +107,29 @@ export default {
         // 移除乘机人
         handleDeleteUser(index){
             this.users.splice(index, 1);  //第一个参数是删除用户对象在数组的下标,第二个参数是删除数组中的长度(个数)
+        },
+        // 发送手机验证码
+        handleSendCaptcha(){
+            if (!this.cellphone) {
+                this.$message.error('请输入正确的手机号码');
+                return            
+            }
+            this.$axios({
+                url:'captchas',
+                method:'post',
+                data:{
+                    tel:this.cellphone
+                }
+            }).then(res=>{
+                console.log(res.data);
+                if (res.data.code) {
+                    this.$message({
+                        message:'手机验证码为:' + res.data.code,
+                        type:'success'
+                    });                
+                }
+                
+            })
         },
         // 提交订单
         handleSubmit(){
